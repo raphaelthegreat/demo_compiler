@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_COMPILER_TAB_H_INCLUDED
-# define YY_YY_COMPILER_TAB_H_INCLUDED
+#ifndef YY_YY_COMPILER_TAB_AUTOGEN_H_INCLUDED
+# define YY_YY_COMPILER_TAB_AUTOGEN_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,13 +45,13 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 12 "compiler.y"
+#line 12 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
 
 #define YYLTYPE SourceLoc
 #define YYLTYPE_IS_DECLARED 1
 #define YYLTYPE_IS_TRIVIAL 1
 
-#line 55 "compiler.tab.h"
+#line 55 "compiler_tab_autogen.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -86,14 +86,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "compiler.y"
+#line 18 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
 
     char str[16];
     int val;
     ASTNode* node;
 	BinaryOp binary_op;
 
-#line 97 "compiler.tab.h"
+#line 97 "compiler_tab_autogen.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -122,4 +122,4 @@ extern YYLTYPE yylloc;
 int yyparse (ParseContext* context);
 
 
-#endif /* !YY_YY_COMPILER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_COMPILER_TAB_AUTOGEN_H_INCLUDED  */

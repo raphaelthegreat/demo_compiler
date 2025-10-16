@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "compiler.y"
+#line 1 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
 
 #include <cstdio>
 #include <cstdlib>
@@ -76,7 +76,7 @@
 #include <vector>
 #include "parse_context.h"
 
-#line 80 "compiler.tab.c"
+#line 80 "compiler_tab_autogen.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -99,7 +99,7 @@
 #  endif
 # endif
 
-#include "compiler.tab.h"
+#include "compiler_tab_autogen.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -163,12 +163,12 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
 /* Second part of user prologue.  */
-#line 25 "compiler.y"
+#line 25 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
 
 extern int yylex(void);
 extern void yyerror(ParseContext* context, const char* reason);
 
-#line 172 "compiler.tab.c"
+#line 172 "compiler_tab_autogen.cpp"
 
 
 #ifdef short
@@ -1301,187 +1301,187 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: program function  */
-#line 47 "compiler.y"
+#line 47 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                            {
 		(yyval.node) = (yyvsp[-1].node);
 		(yyval.node)->children->push_back((yyvsp[0].node));
 	}
-#line 1310 "compiler.tab.c"
+#line 1310 "compiler_tab_autogen.cpp"
     break;
 
   case 3: /* program: function  */
-#line 51 "compiler.y"
+#line 51 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                    {
 		(yyval.node) = context->CreateBlock((yyvsp[0].node));
 		context->SetRoot((yyval.node));
 	}
-#line 1319 "compiler.tab.c"
+#line 1319 "compiler_tab_autogen.cpp"
     break;
 
   case 4: /* program: %empty  */
-#line 55 "compiler.y"
+#line 55 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
 		(yyval.node) = context->CreateBlock(nullptr);
 		context->SetRoot((yyval.node));
 	}
-#line 1328 "compiler.tab.c"
+#line 1328 "compiler_tab_autogen.cpp"
     break;
 
   case 5: /* function: type ID '(' params ')' body  */
-#line 62 "compiler.y"
+#line 62 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                       {
 		context->Pop();
 		(yyval.node) = context->CreateFunction((yylsp[-5]), (yyvsp[-5].node), (yyvsp[-4].str), (yyvsp[-2].node), (yyvsp[0].node));
 	}
-#line 1337 "compiler.tab.c"
+#line 1337 "compiler_tab_autogen.cpp"
     break;
 
   case 6: /* params: type ID  */
-#line 68 "compiler.y"
+#line 68 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                   {
 		context->Push();
 		(yyval.node) = context->CreateBlock(context->CreateSymbol((yyvsp[-1].node), (yyvsp[0].str)));
 	}
-#line 1346 "compiler.tab.c"
+#line 1346 "compiler_tab_autogen.cpp"
     break;
 
   case 7: /* params: params ',' type ID  */
-#line 72 "compiler.y"
+#line 72 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                              {
 		(yyval.node) = (yyvsp[-3].node);
 		(yyval.node)->children->push_back(context->CreateSymbol((yyvsp[-1].node), (yyvsp[0].str)));
 	}
-#line 1355 "compiler.tab.c"
+#line 1355 "compiler_tab_autogen.cpp"
     break;
 
   case 8: /* params: %empty  */
-#line 76 "compiler.y"
+#line 76 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
 		context->Push();
 		(yyval.node) = context->CreateBlock(nullptr);
 	}
-#line 1364 "compiler.tab.c"
+#line 1364 "compiler_tab_autogen.cpp"
     break;
 
   case 9: /* type: INT  */
-#line 82 "compiler.y"
+#line 82 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           { (yyval.node) = context->CreateIntType(); }
-#line 1370 "compiler.tab.c"
+#line 1370 "compiler_tab_autogen.cpp"
     break;
 
   case 10: /* body: '{' decl_list stmts '}'  */
-#line 85 "compiler.y"
+#line 85 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                   {
 		(yyval.node) = context->CreateBlock((yyvsp[-2].node));
 		(yyval.node)->children->push_back((yyvsp[-1].node));
 	}
-#line 1379 "compiler.tab.c"
+#line 1379 "compiler_tab_autogen.cpp"
     break;
 
   case 11: /* decl_list: decl  */
-#line 92 "compiler.y"
+#line 92 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
 		(yyval.node) = context->CreateBlock((yyvsp[0].node));
 	}
-#line 1387 "compiler.tab.c"
+#line 1387 "compiler_tab_autogen.cpp"
     break;
 
   case 12: /* decl_list: decl_list decl  */
-#line 95 "compiler.y"
+#line 95 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                          {
 		(yyval.node) = (yyvsp[-1].node);
 		(yyval.node)->children->push_back((yyvsp[0].node));
 	}
-#line 1396 "compiler.tab.c"
+#line 1396 "compiler_tab_autogen.cpp"
     break;
 
   case 13: /* decl_list: %empty  */
-#line 99 "compiler.y"
+#line 99 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
 		(yyval.node) = context->CreateBlock(nullptr);
 	}
-#line 1404 "compiler.tab.c"
+#line 1404 "compiler_tab_autogen.cpp"
     break;
 
   case 14: /* decl: type ID ';'  */
-#line 105 "compiler.y"
+#line 105 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                       {
 		(yyval.node) = context->CreateSymbol((yyvsp[-2].node), (yyvsp[-1].str));
 	}
-#line 1412 "compiler.tab.c"
+#line 1412 "compiler_tab_autogen.cpp"
     break;
 
   case 15: /* decl: type ID ','  */
-#line 108 "compiler.y"
+#line 108 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                       {
 		(yyval.node) = context->CreateSymbol((yyvsp[-2].node), (yyvsp[-1].str));
 		context->SetDeclSeqType((yyvsp[-2].node));
 	}
-#line 1421 "compiler.tab.c"
+#line 1421 "compiler_tab_autogen.cpp"
     break;
 
   case 16: /* decl: type ID '=' expr ';'  */
-#line 112 "compiler.y"
+#line 112 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                {
 		(yyval.node) = context->CreateSymbol((yyvsp[-4].node), (yyvsp[-3].str), (yyvsp[-1].node));
 	}
-#line 1429 "compiler.tab.c"
+#line 1429 "compiler_tab_autogen.cpp"
     break;
 
   case 17: /* decl: type ID '=' expr ','  */
-#line 115 "compiler.y"
+#line 115 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                {
 		(yyval.node) = context->CreateSymbol((yyvsp[-4].node), (yyvsp[-3].str), (yyvsp[-1].node));
 		context->SetDeclSeqType((yyvsp[-4].node));
 	}
-#line 1438 "compiler.tab.c"
+#line 1438 "compiler_tab_autogen.cpp"
     break;
 
   case 18: /* decl: ',' ID ';'  */
-#line 119 "compiler.y"
+#line 119 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                      {
 		(yyval.node) = context->CreateSymbol(context->DeclSeqType(), (yyvsp[-1].str));
 		context->SetDeclSeqType(nullptr);
 	}
-#line 1447 "compiler.tab.c"
+#line 1447 "compiler_tab_autogen.cpp"
     break;
 
   case 19: /* decl: ',' ID ','  */
-#line 123 "compiler.y"
+#line 123 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                      {
 		(yyval.node) = context->CreateSymbol(context->DeclSeqType(), (yyvsp[-1].str));
 	}
-#line 1455 "compiler.tab.c"
+#line 1455 "compiler_tab_autogen.cpp"
     break;
 
   case 20: /* decl: ',' ID '=' expr ';'  */
-#line 126 "compiler.y"
+#line 126 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                               {
 		(yyval.node) = context->CreateSymbol(context->DeclSeqType(), (yyvsp[-3].str), (yyvsp[-1].node));
 		context->SetDeclSeqType(nullptr);
 	}
-#line 1464 "compiler.tab.c"
+#line 1464 "compiler_tab_autogen.cpp"
     break;
 
   case 21: /* decl: ',' ID '=' expr ','  */
-#line 130 "compiler.y"
+#line 130 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                               {
 		(yyval.node) = context->CreateSymbol(context->DeclSeqType(), (yyvsp[-3].str), (yyvsp[-1].node));
 	}
-#line 1472 "compiler.tab.c"
+#line 1472 "compiler_tab_autogen.cpp"
     break;
 
   case 22: /* stmts: stmt  */
-#line 136 "compiler.y"
+#line 136 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
 		printf("BEGIN STMT\n");
 		(yyval.node) = context->CreateBlock((yyvsp[0].node));
 	}
-#line 1481 "compiler.tab.c"
+#line 1481 "compiler_tab_autogen.cpp"
     break;
 
   case 23: /* stmts: stmts stmt  */
-#line 140 "compiler.y"
+#line 140 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                      {
 		printf("ADD STMT\n");
 		(yyval.node) = (yyvsp[-1].node);
@@ -1489,280 +1489,280 @@ yyreduce:
 			(yyval.node)->children->push_back((yyvsp[0].node));
 		}
 	}
-#line 1493 "compiler.tab.c"
+#line 1493 "compiler_tab_autogen.cpp"
     break;
 
   case 24: /* stmts: %empty  */
-#line 147 "compiler.y"
+#line 147 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
 		(yyval.node) = context->CreateBlock(nullptr);
 	}
-#line 1501 "compiler.tab.c"
+#line 1501 "compiler_tab_autogen.cpp"
     break;
 
   case 25: /* stmt: ID '=' expr ';'  */
-#line 153 "compiler.y"
+#line 153 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                           {
 		printf("MATCHED ASSIGN\n");
 		(yyval.node) = context->CreateBinaryOp(BinaryOp::Assign, context->FindSymbol((yyvsp[-3].str)), (yyvsp[-1].node));
 	}
-#line 1510 "compiler.tab.c"
+#line 1510 "compiler_tab_autogen.cpp"
     break;
 
   case 26: /* stmt: RETURN expr ';'  */
-#line 157 "compiler.y"
+#line 157 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                           {
 		(yyval.node) = context->CreateReturn((yyvsp[-1].node));
 	}
-#line 1518 "compiler.tab.c"
+#line 1518 "compiler_tab_autogen.cpp"
     break;
 
   case 27: /* stmt: IF '(' expr ')' block ELSE block  */
-#line 160 "compiler.y"
+#line 160 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                            {
 		(yyval.node) = context->CreateIfElse((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node));
 	}
-#line 1526 "compiler.tab.c"
+#line 1526 "compiler_tab_autogen.cpp"
     break;
 
   case 28: /* $@1: %empty  */
-#line 163 "compiler.y"
+#line 163 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                              { printf("MATCHED WHILE HEADER\n"); }
-#line 1532 "compiler.tab.c"
+#line 1532 "compiler_tab_autogen.cpp"
     break;
 
   case 29: /* stmt: WHILE '(' expr ')' $@1 block  */
-#line 163 "compiler.y"
+#line 163 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                                                          {
 		(yyval.node) = context->CreateWhile((yyvsp[-3].node), (yyvsp[0].node));
 	}
-#line 1540 "compiler.tab.c"
+#line 1540 "compiler_tab_autogen.cpp"
     break;
 
   case 30: /* stmt: BREAK ';'  */
-#line 166 "compiler.y"
+#line 166 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                     {
 		(yyval.node) = context->CreateBreak();
 	}
-#line 1548 "compiler.tab.c"
+#line 1548 "compiler_tab_autogen.cpp"
     break;
 
   case 31: /* stmt: block  */
-#line 169 "compiler.y"
+#line 169 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                 {
 		printf("MATCHED BLOCK\n");
 		(yyval.node) = (yyvsp[0].node);
 	}
-#line 1557 "compiler.tab.c"
+#line 1557 "compiler_tab_autogen.cpp"
     break;
 
   case 32: /* stmt: ';'  */
-#line 173 "compiler.y"
+#line 173 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               {
 		printf("MATCHED ;\n");
 		(yyval.node) = nullptr;
 	}
-#line 1566 "compiler.tab.c"
+#line 1566 "compiler_tab_autogen.cpp"
     break;
 
   case 33: /* $@2: %empty  */
-#line 180 "compiler.y"
+#line 180 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               { context->Push(); printf("BEGIN BLOCK\n"); }
-#line 1572 "compiler.tab.c"
+#line 1572 "compiler_tab_autogen.cpp"
     break;
 
   case 34: /* block: '{' $@2 stmts '}'  */
-#line 180 "compiler.y"
+#line 180 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                                                       {
 		(yyval.node) = (yyvsp[-1].node);
 		context->Pop();
 	}
-#line 1581 "compiler.tab.c"
+#line 1581 "compiler_tab_autogen.cpp"
     break;
 
   case 35: /* expr: add_expr relop add_expr  */
-#line 187 "compiler.y"
+#line 187 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                   {
 		(yyval.node) = context->CreateBinaryOp((yyvsp[-1].binary_op), (yyvsp[-2].node), (yyvsp[0].node));
 	}
-#line 1589 "compiler.tab.c"
+#line 1589 "compiler_tab_autogen.cpp"
     break;
 
   case 36: /* expr: add_expr  */
-#line 190 "compiler.y"
+#line 190 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                    { 
 		(yyval.node) = (yyvsp[0].node);
 	}
-#line 1597 "compiler.tab.c"
+#line 1597 "compiler_tab_autogen.cpp"
     break;
 
   case 37: /* relop: LE  */
-#line 196 "compiler.y"
+#line 196 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::LessThan; }
-#line 1603 "compiler.tab.c"
+#line 1603 "compiler_tab_autogen.cpp"
     break;
 
   case 38: /* relop: LT  */
-#line 197 "compiler.y"
+#line 197 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::LessThanEqual; }
-#line 1609 "compiler.tab.c"
+#line 1609 "compiler_tab_autogen.cpp"
     break;
 
   case 39: /* relop: GT  */
-#line 198 "compiler.y"
+#line 198 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::GreaterThan; }
-#line 1615 "compiler.tab.c"
+#line 1615 "compiler_tab_autogen.cpp"
     break;
 
   case 40: /* relop: GE  */
-#line 199 "compiler.y"
+#line 199 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::GreaterThanEqual; }
-#line 1621 "compiler.tab.c"
+#line 1621 "compiler_tab_autogen.cpp"
     break;
 
   case 41: /* relop: EQ  */
-#line 200 "compiler.y"
+#line 200 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::Equal; }
-#line 1627 "compiler.tab.c"
+#line 1627 "compiler_tab_autogen.cpp"
     break;
 
   case 42: /* relop: NE  */
-#line 201 "compiler.y"
+#line 201 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              { (yyval.binary_op) = BinaryOp::NotEqual; }
-#line 1633 "compiler.tab.c"
+#line 1633 "compiler_tab_autogen.cpp"
     break;
 
   case 43: /* add_expr: add_expr addop term  */
-#line 205 "compiler.y"
+#line 205 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                               {
 		(yyval.node) = context->CreateBinaryOp((yyvsp[-1].binary_op), (yyvsp[-2].node), (yyvsp[0].node));
 	}
-#line 1641 "compiler.tab.c"
+#line 1641 "compiler_tab_autogen.cpp"
     break;
 
   case 44: /* add_expr: term  */
-#line 208 "compiler.y"
+#line 208 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
 		(yyval.node) = (yyvsp[0].node);
 	}
-#line 1649 "compiler.tab.c"
+#line 1649 "compiler_tab_autogen.cpp"
     break;
 
   case 45: /* addop: '+'  */
-#line 214 "compiler.y"
+#line 214 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               { (yyval.binary_op) = BinaryOp::Add; }
-#line 1655 "compiler.tab.c"
+#line 1655 "compiler_tab_autogen.cpp"
     break;
 
   case 46: /* addop: '-'  */
-#line 215 "compiler.y"
+#line 215 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               { (yyval.binary_op) = BinaryOp::Subtract; }
-#line 1661 "compiler.tab.c"
+#line 1661 "compiler_tab_autogen.cpp"
     break;
 
   case 47: /* term: term mulop factor  */
-#line 219 "compiler.y"
+#line 219 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                             {
 		(yyval.node) = context->CreateBinaryOp((yyvsp[-1].binary_op), (yyvsp[-2].node), (yyvsp[0].node));
 	}
-#line 1669 "compiler.tab.c"
+#line 1669 "compiler_tab_autogen.cpp"
     break;
 
   case 48: /* term: factor  */
-#line 222 "compiler.y"
+#line 222 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                  {
 		(yyval.node) = (yyvsp[0].node);
 	}
-#line 1677 "compiler.tab.c"
+#line 1677 "compiler_tab_autogen.cpp"
     break;
 
   case 49: /* mulop: '*'  */
-#line 228 "compiler.y"
+#line 228 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               { (yyval.binary_op) = BinaryOp::Multiply; }
-#line 1683 "compiler.tab.c"
+#line 1683 "compiler_tab_autogen.cpp"
     break;
 
   case 50: /* mulop: '/'  */
-#line 229 "compiler.y"
+#line 229 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               { (yyval.binary_op) = BinaryOp::Divide; }
-#line 1689 "compiler.tab.c"
+#line 1689 "compiler_tab_autogen.cpp"
     break;
 
   case 51: /* factor: '(' expr ')'  */
-#line 233 "compiler.y"
+#line 233 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                        {
 		(yyval.node) = (yyvsp[-1].node);
 	}
-#line 1697 "compiler.tab.c"
+#line 1697 "compiler_tab_autogen.cpp"
     break;
 
   case 52: /* factor: ID  */
-#line 236 "compiler.y"
+#line 236 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
              {
 		(yyval.node) = context->FindSymbol((yyvsp[0].str));
 	}
-#line 1705 "compiler.tab.c"
+#line 1705 "compiler_tab_autogen.cpp"
     break;
 
   case 53: /* factor: NUM  */
-#line 239 "compiler.y"
+#line 239 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
               {
 		(yyval.node) = context->CreateIntConst((yyvsp[0].val));
 	}
-#line 1713 "compiler.tab.c"
+#line 1713 "compiler_tab_autogen.cpp"
     break;
 
   case 54: /* factor: TRUE  */
-#line 242 "compiler.y"
+#line 242 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
 		(yyval.node) = context->CreateIntConst(1);
 	}
-#line 1721 "compiler.tab.c"
+#line 1721 "compiler_tab_autogen.cpp"
     break;
 
   case 55: /* factor: FALSE  */
-#line 245 "compiler.y"
+#line 245 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                 {
 		(yyval.node) = context->CreateIntConst(0);
 	}
-#line 1729 "compiler.tab.c"
+#line 1729 "compiler_tab_autogen.cpp"
     break;
 
   case 56: /* factor: ID '(' args ')'  */
-#line 248 "compiler.y"
+#line 248 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                           {
 		(yyval.node) = context->CreateCall(context->FindSymbol((yyvsp[-3].str)), (yyvsp[-1].node));
 	}
-#line 1737 "compiler.tab.c"
+#line 1737 "compiler_tab_autogen.cpp"
     break;
 
   case 57: /* args: expr  */
-#line 254 "compiler.y"
+#line 254 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
 		(yyval.node) = context->CreateBlock((yyvsp[0].node));
 	}
-#line 1745 "compiler.tab.c"
+#line 1745 "compiler_tab_autogen.cpp"
     break;
 
   case 58: /* args: args ',' expr  */
-#line 257 "compiler.y"
+#line 257 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                         {
 		(yyval.node) = (yyvsp[-2].node);
 		(yyval.node)->children->push_back((yyvsp[0].node));
 	}
-#line 1754 "compiler.tab.c"
+#line 1754 "compiler_tab_autogen.cpp"
     break;
 
   case 59: /* args: %empty  */
-#line 261 "compiler.y"
+#line 261 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
 		(yyval.node) = context->CreateBlock(nullptr);
 	}
-#line 1762 "compiler.tab.c"
+#line 1762 "compiler_tab_autogen.cpp"
     break;
 
 
-#line 1766 "compiler.tab.c"
+#line 1766 "compiler_tab_autogen.cpp"
 
       default: break;
     }
@@ -1960,7 +1960,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 266 "compiler.y"
+#line 266 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
 
 
 int compiler_parse(ParseContext* context) {

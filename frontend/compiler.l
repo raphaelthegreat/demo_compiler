@@ -1,7 +1,7 @@
 %{
 #include <print>
 #include "parse_context.h"
-#include "compiler.tab.h"
+#include "compiler_tab_autogen.h"
 %}
 
 %option yylineno

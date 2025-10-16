@@ -1,5 +1,6 @@
+#line 2 "compiler_lex_autogen.cpp"
 
-#line 2 "lex.yy.c"
+#line 4 "compiler_lex_autogen.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -507,13 +508,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "compiler.l"
-#line 2 "compiler.l"
+#line 1 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
+#line 2 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 #include <print>
 #include "parse_context.h"
-#include "compiler.tab.h"
-#line 515 "lex.yy.c"
-#line 516 "lex.yy.c"
+#include "compiler_tab_autogen.h"
+#line 517 "compiler_lex_autogen.cpp"
+#line 518 "compiler_lex_autogen.cpp"
 
 #define INITIAL 0
 
@@ -730,9 +731,9 @@ YY_DECL
 		}
 
 	{
-#line 10 "compiler.l"
+#line 10 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 
-#line 735 "lex.yy.c"
+#line 737 "compiler_lex_autogen.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -801,106 +802,106 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 11 "compiler.l"
+#line 11 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 ;
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 12 "compiler.l"
+#line 12 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { yylineno = yylineno + 1;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 13 "compiler.l"
+#line 13 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found INT token\n"); return INT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "compiler.l"
+#line 14 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found WHILE token\n"); return WHILE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 15 "compiler.l"
+#line 15 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found IF token\n"); return IF; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 16 "compiler.l"
+#line 16 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found ELSE token\n"); return ELSE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 17 "compiler.l"
+#line 17 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found TRUE token\n"); return TRUE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 18 "compiler.l"
+#line 18 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found FALSE token\n"); return FALSE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 19 "compiler.l"
+#line 19 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found RETURN token\n"); return RETURN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 20 "compiler.l"
+#line 20 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found BREAK token\n"); return BREAK; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 21 "compiler.l"
+#line 21 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found NUM token\n"); yylval.val = atoi(yytext); return NUM; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 22 "compiler.l"
+#line 22 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { strcpy(yylval.str, yytext); return ID; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 23 "compiler.l"
+#line 23 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found LE token\n"); return LE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 24 "compiler.l"
+#line 24 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found GE token\n"); return GE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 25 "compiler.l"
+#line 25 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found EQ token\n"); return EQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 26 "compiler.l"
+#line 26 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found ME token\n"); return NE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 27 "compiler.l"
+#line 27 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found GT token\n"); return GT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 28 "compiler.l"
+#line 28 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 { std::print("Found LT token\n"); return LT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 29 "compiler.l"
+#line 29 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 return yytext[0];
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 30 "compiler.l"
+#line 30 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 ECHO;
 	YY_BREAK
-#line 903 "lex.yy.c"
+#line 905 "compiler_lex_autogen.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1917,6 +1918,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 30 "compiler.l"
+#line 30 "/home/turtle/Desktop/demo_compiler/frontend/compiler.l"
 
 

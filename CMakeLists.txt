@@ -5,4 +5,38 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(compiler VERSION 1.0 LANGUAGES CXX)
 
-add_executable(compiler parse_context.h parse_context.cpp lex.yy.cpp compiler.tab.h compiler.tab.cpp main.cpp)
+# Run bison and flex on frontend parsers
+set(FRONTEND_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frontend)
+set(LEX_FILENAME "compiler_lex_autogen")
+set(BISON_FILENAME "compiler_tab_autogen")
+
+add_custom_command(
+    OUTPUT ${FRONTEND_PATH}/${BISON_FILENAME}.h ${FRONTEND_PATH}/${BISON_FILENAME}.cpp
+    COMMAND bison --defines=${BISON_FILENAME}.h --output=${BISON_FILENAME}.cpp ${FRONTEND_PATH}/compiler.y
+    WORKING_DIRECTORY ${FRONTEND_PATH}
+)
+add_custom_command(
+    OUTPUT ${FRONTEND_PATH}/${LEX_FILENAME}.cpp
+    COMMAND flex --outfile=${LEX_FILENAME}.cpp ${FRONTEND_PATH}/compiler.l
+    WORKING_DIRECTORY ${FRONTEND_PATH}
+)
+add_custom_target(compiler_autogen DEPENDS ${FRONTEND_PATH}/${LEX_FILENAME}.cpp
+                                           ${FRONTEND_PATH}/${BISON_FILENAME}.h
+                                           ${FRONTEND_PATH}/${BISON_FILENAME}.cpp)
+
+add_executable(compiler backend/mix/mix_emitter.cpp
+                        backend/mix/mix_emitter.h
+                        backend/mix/mix_item.h
+                        backend/mix/mix_opcode.h
+                        frontend/ast_node.h
+                        frontend/${BISON_FILENAME}.cpp
+                        frontend/${BISON_FILENAME}.h
+                        frontend/${LEX_FILENAME}.cpp
+                        frontend/parse_context.cpp
+                        frontend/parse_context.h
+                        ir/value.h
+                        ir/instruction.h
+                        ir/block.h
+                        main.cpp)
+target_include_directories(compiler PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+add_dependencies(compiler compiler_autogen)

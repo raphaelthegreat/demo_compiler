@@ -1,6 +1,6 @@
 #include <print>
-#include "parse_context.h"
-#include "compiler.tab.h"
+#include "frontend/parse_context.h"
+#include "frontend/compiler_tab_autogen.h"
 
 extern FILE *yyin;
 extern int yylex (void);
@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     }
     yyin = myfile;
 
-    ParseContext* context = new ParseContext;
-    yyparse(context);
-    context->PrintTree();
+    ParseContext context;
+    yyparse(&context);
+    context.PrintTree();
 }
