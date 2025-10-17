@@ -33,6 +33,7 @@ public:
 
     Value Call(Function* func, Value a = {}, Value b = {}, Value c = {}, Value d = {});
     void Return(Value val = {});
+    void Goto(Value cond, Block* target);
 
     Value LoadReg(Reg reg);
     void StoreReg(Reg reg, Value value);

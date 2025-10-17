@@ -22,8 +22,9 @@ static uint32_t InstIndex(std::map<const Inst*, uint32_t>& inst_to_index, uint32
     return it->second;
 }
 
-static std::string ArgToIndex(std::map<const Inst*, uint32_t>& inst_to_index, uint32_t& inst_index,
-                              const Value& arg) {
+static std::string ArgToIndex(std::map<const Inst*, uint32_t>& inst_to_index,
+                              const std::map<const Block*, uint32_t>& block_to_index,
+                              uint32_t& inst_index, const Value& arg) {
     if (arg.IsEmpty()) {
         return "<null>";
     }
@@ -37,6 +38,13 @@ static std::string ArgToIndex(std::map<const Inst*, uint32_t>& inst_to_index, ui
         return std::format("{}", arg.func->name);
     case Type::Reg:
         return std::format("R{}", arg.reg.index);
+    case Type::Block: {
+        std::string ret{"Block"};
+        if (const auto it = block_to_index.find(arg.block); it != block_to_index.end()) {
+            ret += std::format(" ${}", it->second);
+        }
+        return ret;
+    }
     default:
         return "<unknown immediate type>";
     }
@@ -66,7 +74,7 @@ std::string DumpBlock(const Block& block, const std::map<const Block*, uint32_t>
         const auto arg_count = NumArgsOf(inst.GetOpcode());
         for (uint32_t arg_index = 0; arg_index < arg_count; ++arg_index) {
             const Value arg = inst.Arg(arg_index);
-            const std::string arg_str = ArgToIndex(inst_to_index, inst_index, arg);
+            const std::string arg_str = ArgToIndex(inst_to_index, block_to_index, inst_index, arg);
             ret += arg_index != 0 ? ", " : " ";
             ret += arg_str;
         }

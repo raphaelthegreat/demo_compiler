@@ -8,7 +8,11 @@ struct ASTNode;
 
 class TranslatePass {
 public:
-    IR::Program Translate(ASTNode* root);
+    TranslatePass(ASTNode* root);
+
+    IR::Program& Program() {
+        return program;
+    }
 
 private:
     IR::Block* EmitBlock(ASTNode* block);

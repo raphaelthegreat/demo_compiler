@@ -8,23 +8,38 @@ enum class Type {
     Void,
     Opaque,
     Function,
+    Block,
     Reg,
     I32,
 };
 
 struct Inst;
 struct Function;
+struct Block;
 
 struct Reg {
     uint32_t index;
 };
 
 struct Value {
-    explicit Value(Inst* inst_) : type{Type::Opaque}, inst{inst_} {}
+    explicit Value(IR::Inst* inst_) : type{Type::Opaque}, inst{inst_} {}
     explicit Value(Function* func_) : type{Type::Function}, func{func_} {}
+    explicit Value(Block* block_) : type{Type::Block}, block{block_} {}
     explicit Value(int32_t imm) : type{Type::I32}, imm_i32{imm} {}
-    explicit Value(Reg reg_) : type{Type::Reg}, reg{reg_} {}
+    explicit Value(IR::Reg reg_) : type{Type::Reg}, reg{reg_} {}
     Value() : type{Type::Void} {}
+
+    IR::Reg Reg() const {
+        return reg;
+    }
+
+    IR::Inst* Inst() const {
+        return inst;
+    }
+
+    Function* Func() const {
+        return func;
+    }
 
     bool IsEmpty() const {
         return type == Type::Void;
@@ -35,13 +50,15 @@ struct Value {
     }
 
     bool IsIdentity() const;
+    IR::Inst* InstRecursive() const;
 
     Type type;
     union {
-        Inst* inst{};
+        IR::Inst* inst{};
         Function* func;
+        Block* block;
         int32_t imm_i32;
-        Reg reg;
+        IR::Reg reg;
     };
 };
 

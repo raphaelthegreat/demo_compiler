@@ -4,6 +4,7 @@ namespace IR {
 
 std::string_view NameOf(Opcode op) {
     switch (op) {
+    case Opcode::Void: return "Void";
     case Opcode::Add: return "Add";
     case Opcode::Subtract: return "Subtract";
     case Opcode::Multiply: return "Multiply";
@@ -18,13 +19,14 @@ std::string_view NameOf(Opcode op) {
     case Opcode::StoreReg: return "StoreReg";
     case Opcode::Call: return "Call";
     case Opcode::Return: return "Return";
+    case Opcode::Goto: return "Goto";
     case Opcode::Identity: return "Identity";
     }
     return "Unknown";
 }
 
 bool IsVoid(Opcode op) {
-    return op == Opcode::StoreReg || op == Opcode::Return;
+    return op == Opcode::Void || op == Opcode::StoreReg || op == Opcode::Return || op == Opcode::Goto;
 }
 
 uint32_t NumArgsOf(Opcode op) {
@@ -40,6 +42,7 @@ uint32_t NumArgsOf(Opcode op) {
 	case Opcode::Equal:
 	case Opcode::NotEqual:
     case Opcode::StoreReg:
+    case Opcode::Goto:
         return 2;
     case Opcode::LoadReg:
     case Opcode::Return:
@@ -47,8 +50,9 @@ uint32_t NumArgsOf(Opcode op) {
         return 1;
     case Opcode::Call:
         return 5;
+    default:
+        return 0;
     }
-    return 0;
 }
 
 } // namespace IR

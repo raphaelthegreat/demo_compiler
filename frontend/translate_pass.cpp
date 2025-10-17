@@ -1,16 +1,15 @@
 #include "frontend/ast_node.h"
 #include "frontend/translate_pass.h"
 
+#include <algorithm>
 #include <array>
 #include <cstdlib>
 
-IR::Program TranslatePass::Translate(ASTNode* root) {
+TranslatePass::TranslatePass(ASTNode* root) {
     for (auto* node : *root->children) {
         func = FunctionFromAst(node);
         EmitBlock(node->body);
-        IR::DumpFunction(*func);
     }
-    return program;
 }
 
 IR::Block* TranslatePass::EmitBlock(ASTNode* node) {
@@ -46,14 +45,14 @@ IR::Block* TranslatePass::EmitBlock(ASTNode* node) {
         }
         case NodeType::While: {
             auto* header_block = BlockFromAst(child);
-            block->Link(ir.ConstI32(1), header_block, nullptr);
             ir.SetBlock(header_block);
-            auto cond = EmitExpr(child->cond);
+            auto cond = ir.Equal(EmitExpr(child->cond), ir.ConstI32(0));
             auto* body_block = EmitBlock(child->body);
-            auto* loop_block = &func->blocks.emplace_back();
             auto merge_it = std::next(it);
             IR::Block* merge_block = merge_it != children.end() ? BlockFromAst(*merge_it) : &func->blocks.emplace_back();
-            header_block->Link(cond, body_block, merge_block);
+            auto* loop_block = &*func->blocks.emplace(--func->blocks.end());
+            header_block->Branch(cond, merge_block);
+            loop_block->Branch(ir.ConstI32(1), header_block);
             ir.SetBlock(merge_block);
             break;
         }
@@ -64,26 +63,23 @@ IR::Block* TranslatePass::EmitBlock(ASTNode* node) {
             }
             Ensure<NodeType::While>(parent);
             auto& top_children = *parent->parent->children;
-            auto while_it = top_children.begin() + std::distance(top_children.data(), &parent);
+            auto while_it = std::ranges::find(top_children, parent);
             auto merge_it = std::next(while_it);
-            IR::Block* merge_block = merge_it != children.end() ? BlockFromAst(*merge_it) : &func->blocks.emplace_back();
-            block->Link(ir.ConstI32(1), merge_block, nullptr);
+            IR::Block* merge_block = merge_it != top_children.end() ? BlockFromAst(*merge_it) : &func->blocks.emplace_back();
+            block->Branch(ir.ConstI32(1), merge_block);
             break;
         }
         case NodeType::IfElse: {
-            auto cond = EmitExpr(child->cond);
+            auto cond = ir.Equal(EmitExpr(child->cond), ir.ConstI32(0));
             auto* if_block = EmitBlock(child->if_body);
             if (child->else_body) {
                 auto* else_block = EmitBlock(child->else_body);
-                block->Link(cond, if_block, else_block);
+                block->Branch(cond, else_block);
             }
             auto merge_it = std::next(it);
             IR::Block* merge_block = merge_it != children.end() ? BlockFromAst(*merge_it) : &func->blocks.emplace_back();
-            if_block->Link(ir.ConstI32(1), merge_block, nullptr);
             if (child->else_body) {
-                block->false_branch->Link(ir.ConstI32(1), merge_block, nullptr);
-            } else {
-                block->Link(cond, if_block, merge_block);
+                if_block->Branch(ir.ConstI32(1), merge_block);
             }
             ir.SetBlock(merge_block);
             break;
@@ -94,7 +90,6 @@ IR::Block* TranslatePass::EmitBlock(ASTNode* node) {
             } else {
                 ir.Return();
             }
-            block->Link(ir.ConstI32(1), nullptr, nullptr);
             break;
         }
         default:

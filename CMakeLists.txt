@@ -26,6 +26,8 @@ add_custom_target(compiler_autogen DEPENDS ${FRONTEND_PATH}/${LEX_FILENAME}.cpp
 
 add_executable(compiler backend/mix/mix_emitter.cpp
                         backend/mix/mix_emitter.h
+                        backend/mix/mix_ir_pass.cpp
+                        backend/mix/mix_ir_pass.h
                         backend/mix/mix_item.h
                         backend/mix/mix_opcode.h
                         frontend/ast_node.h
@@ -36,6 +38,8 @@ add_executable(compiler backend/mix/mix_emitter.cpp
                         frontend/parse_context.h
                         frontend/translate_pass.cpp
                         frontend/translate_pass.h
+                        ir/passes/identity_removal.cpp
+                        ir/passes/load_store_elimination.cpp
                         ir/block.cpp
                         ir/block.h
                         ir/function.cpp

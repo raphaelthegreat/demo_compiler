@@ -1,12 +1,14 @@
 #pragma once
 
 #include <array>
+#include <cstring>
 #include <string_view>
 #include "ir/value.h"
 
 namespace IR {
 
 enum class Opcode {
+    Void,
     Add,
     Subtract,
     Multiply,
@@ -21,6 +23,7 @@ enum class Opcode {
     StoreReg,
     Call,
     Return,
+    Goto,
     Identity,
 };
 
@@ -46,9 +49,35 @@ struct Inst {
         args[index] = arg;
     }
 
+    void Invalidate() {
+        std::memset(&args, 0, sizeof(args));
+        opcode = Opcode::Void;
+    }
+
+    void ToIdentity(Value val) {
+        Invalidate();
+        args[0] = val;
+        opcode = Opcode::Identity;
+    }
+
+    void ReplaceOp(Opcode new_op) {
+        opcode = new_op;
+    }
+
+    template <typename T>
+    void SetDefinition(T def) {
+        definition = std::bit_cast<uint32_t>(def);
+    }
+
+    template <typename T>
+    T Definition() const noexcept {
+        return std::bit_cast<T>(definition);
+    }
+
 private:
     Opcode opcode;
     std::array<Value, MAX_ARGS> args;
+    uint32_t definition;
 };
 
 } // namespace IR

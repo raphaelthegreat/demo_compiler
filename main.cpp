@@ -1,8 +1,13 @@
 #include <print>
+
+#include "backend/mix/mix_emitter.h"
 #include "frontend/parse_context.h"
 #include "frontend/translate_pass.h"
 
 #include "frontend/compiler_tab_autogen.h"
+
+#include "ir/passes/passes.h"
+#include "backend/mix/mix_ir_pass.h"
 
 extern FILE *yyin;
 extern int yylex (void);
@@ -25,8 +30,22 @@ int main(int argc, char** argv) {
     ParseContext context;
     yyparse(&context);
     context.PrintTree();
+    auto* root = context.Root();
 
     // Emit IR from the generated AST
-    TranslatePass translate_pass;
-    translate_pass.Translate(context.Root());
+    TranslatePass translate_pass(root);
+    auto& program = translate_pass.Program();
+
+    // Run transformation passes on IR
+    IR::LoadStoreElimination(program);
+    Mix::MixPreprocessPass(program);
+    IR::IdentityRemovalPass(program);
+
+    // Emit MIX assembly
+    Mix::Emitter emitter(program);
+
+    // Dump IR
+    for (auto& function : program.functions) {
+        IR::DumpFunction(function);
+    }
 }

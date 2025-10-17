@@ -55,6 +55,10 @@ void IREmitter::Return(Value val) {
     Inst(Opcode::Return, val);
 }
 
+void IREmitter::Goto(Value cond, Block* target) {
+    Inst(Opcode::Goto, cond, target);
+}
+
 Value IREmitter::LoadReg(Reg reg) {
     return Inst(Opcode::LoadReg, reg);
 }
