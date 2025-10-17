@@ -58,7 +58,7 @@ std::string DumpExpr(const ASTNode* expr) {
 }
 
 std::string DumpBlock(int indentation, ASTNode* node) {
-    if (node->node_type != NodeType::Block) {
+    if (node->node_type != NodeType::Block && node->node_type != NodeType::DeclBlock) {
         std::abort();
     }
     std::string indent(indentation, ' ');
@@ -85,6 +85,7 @@ std::string DumpBlock(int indentation, ASTNode* node) {
             break;
         }
         case NodeType::Block:      // children
+        case NodeType::DeclBlock:
             ret += DumpBlock(indentation + 2, child);
             break;
         case NodeType::UnaryOp:
@@ -204,7 +205,16 @@ ASTNode* ParseContext::CreateBlock(ASTNode* initial_child) {
     auto* node = &node_pool.emplace_back(NodeType::Block);
     node->children = std::make_unique<std::vector<ASTNode*>>();
     if (initial_child) {
-        node->children->push_back(initial_child);
+        node->AddChild(initial_child);
+    }
+    return node;
+}
+
+ASTNode* ParseContext::CreateDeclBlock(ASTNode* initial_child) {
+    auto* node = &node_pool.emplace_back(NodeType::DeclBlock);
+    node->children = std::make_unique<std::vector<ASTNode*>>();
+    if (initial_child) {
+        node->AddChild(initial_child);
     }
     return node;
 }
@@ -221,7 +231,9 @@ ASTNode* ParseContext::CreateIfElse(ASTNode* cond, ASTNode* if_body, ASTNode* el
     auto* node = &node_pool.emplace_back(NodeType::IfElse);
     node->cond = cond;
     node->if_body = if_body;
+    node->if_body->parent = node;
     node->else_body = else_body;
+    node->else_body->parent = node;
     return node;
 }
 
@@ -229,6 +241,7 @@ ASTNode* ParseContext::CreateWhile(ASTNode* cond, ASTNode* body) {
     auto* node = &node_pool.emplace_back(NodeType::While);
     node->cond = cond;
     node->body = body;
+    node->body->parent = node;
     return node;
 }
 

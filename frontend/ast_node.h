@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bit>
 #include <memory>
 #include <vector>
 #include <string_view>
@@ -32,6 +33,7 @@ enum class NodeType {
     Type,       // basic_type
     Function,   // type, params, name, body
     Symbol,     // type, name, initializer
+    DeclBlock,  // children
     Block,      // children
     UnaryOp,    // unary_op, node_a
     BinaryOp,   // binary_op, node_a, node_b
@@ -42,9 +44,13 @@ enum class NodeType {
     Return,     // ret_expr
 };
 
+constexpr uint64_t NoPayload = -1LL;
+
 struct ASTNode {
     NodeType node_type;
+    ASTNode* parent{};
     std::unique_ptr<std::vector<ASTNode*>> children;
+    uint64_t payload{NoPayload};
     union {
         BasicType basic_type;
         UnaryOp unary_op;
@@ -71,4 +77,19 @@ struct ASTNode {
 
     explicit ASTNode(NodeType type) : node_type(type) {}
     ~ASTNode() = default;
+
+    void AddChild(ASTNode* child) {
+        child->parent = this;
+        children->push_back(child);
+    }
+
+    template <typename T = uint64_t>
+    T Payload() const {
+        return std::bit_cast<T>(payload);
+    }
+
+    template <typename T = uint64_t>
+    void SetPayload(T val) {
+        payload = std::bit_cast<uint64_t>(val);
+    }
 };

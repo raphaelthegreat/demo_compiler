@@ -31,6 +31,10 @@ public:
         sym_tables.pop_back();
     }
 
+    ASTNode* Root() {
+        return root;
+    }
+
     void SetRoot(ASTNode* block) {
         root = block;
     }
@@ -54,6 +58,7 @@ public:
     ASTNode* CreateFunction(const SourceLoc& loc, ASTNode* return_type,
                             const std::string& name, ASTNode* params,
                             ASTNode* body);
+    ASTNode* CreateDeclBlock(ASTNode* initial_child);
     ASTNode* CreateBlock(ASTNode* initial_child);
     ASTNode* CreateBinaryOp(BinaryOp op, ASTNode* node_a, ASTNode* node_b);
     ASTNode* CreateIfElse(ASTNode* cond, ASTNode* if_body, ASTNode* else_body);

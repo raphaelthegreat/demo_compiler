@@ -1,5 +1,7 @@
 #include <print>
 #include "frontend/parse_context.h"
+#include "frontend/translate_pass.h"
+
 #include "frontend/compiler_tab_autogen.h"
 
 extern FILE *yyin;
@@ -19,7 +21,12 @@ int main(int argc, char** argv) {
     }
     yyin = myfile;
 
+    // Parse text program and generate AST
     ParseContext context;
     yyparse(&context);
     context.PrintTree();
+
+    // Emit IR from the generated AST
+    TranslatePass translate_pass;
+    translate_pass.Translate(context.Root());
 }

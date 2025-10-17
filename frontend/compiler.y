@@ -46,7 +46,7 @@ extern void yyerror(ParseContext* context, const char* reason);
 program
 	: program function {
 		$$ = $1;
-		$$->children->push_back($2);
+		$$->AddChild($2);
 	}
 	| function {
 		$$ = context->CreateBlock($1);
@@ -71,7 +71,7 @@ params
 	}
 	| params ',' type ID {
 		$$ = $1;
-		$$->children->push_back(context->CreateSymbol($3, $4));
+		$$->AddChild(context->CreateSymbol($3, $4));
 	}
 	| {
 		context->Push();
@@ -84,20 +84,20 @@ type: INT { $$ = context->CreateIntType(); } ;
 body
 	: '{' decl_list stmts '}' {
 		$$ = context->CreateBlock($2);
-		$$->children->push_back($3);
+		$$->AddChild($3);
 	}
 	;
 
 decl_list
 	: decl {
-		$$ = context->CreateBlock($1);
+		$$ = context->CreateDeclBlock($1);
 	}
 	| decl_list decl {
 		$$ = $1;
-		$$->children->push_back($2);
+		$$->AddChild($2);
 	}
 	| {
-		$$ = context->CreateBlock(nullptr);
+		$$ = context->CreateDeclBlock(nullptr);
 	}
 	;
 
@@ -141,7 +141,7 @@ stmts
 		printf("ADD STMT\n");
 		$$ = $1;
 		if ($2) {
-			$$->children->push_back($2);
+			$$->AddChild($2);
 		}
 	}
 	| {
@@ -256,7 +256,7 @@ args
 	}
 	| args ',' expr {
 		$$ = $1;
-		$$->children->push_back($3);
+		$$->AddChild($3);
 	}
 	| {
 		$$ = context->CreateBlock(nullptr);

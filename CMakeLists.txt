@@ -34,9 +34,19 @@ add_executable(compiler backend/mix/mix_emitter.cpp
                         frontend/${LEX_FILENAME}.cpp
                         frontend/parse_context.cpp
                         frontend/parse_context.h
-                        ir/value.h
-                        ir/instruction.h
+                        frontend/translate_pass.cpp
+                        frontend/translate_pass.h
+                        ir/block.cpp
                         ir/block.h
+                        ir/function.cpp
+                        ir/function.h
+                        ir/instruction.cpp
+                        ir/instruction.h
+                        ir/ir_emitter.cpp
+                        ir/ir_emitter.h
+                        ir/program.h
+                        ir/value.cpp
+                        ir/value.h
                         main.cpp)
 target_include_directories(compiler PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 add_dependencies(compiler compiler_autogen)

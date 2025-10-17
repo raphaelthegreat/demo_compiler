@@ -1304,7 +1304,7 @@ yyreduce:
 #line 47 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                            {
 		(yyval.node) = (yyvsp[-1].node);
-		(yyval.node)->children->push_back((yyvsp[0].node));
+		(yyval.node)->AddChild((yyvsp[0].node));
 	}
 #line 1310 "compiler_tab_autogen.cpp"
     break;
@@ -1349,7 +1349,7 @@ yyreduce:
 #line 72 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                              {
 		(yyval.node) = (yyvsp[-3].node);
-		(yyval.node)->children->push_back(context->CreateSymbol((yyvsp[-1].node), (yyvsp[0].str)));
+		(yyval.node)->AddChild(context->CreateSymbol((yyvsp[-1].node), (yyvsp[0].str)));
 	}
 #line 1355 "compiler_tab_autogen.cpp"
     break;
@@ -1373,7 +1373,7 @@ yyreduce:
 #line 85 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                                   {
 		(yyval.node) = context->CreateBlock((yyvsp[-2].node));
-		(yyval.node)->children->push_back((yyvsp[-1].node));
+		(yyval.node)->AddChild((yyvsp[-1].node));
 	}
 #line 1379 "compiler_tab_autogen.cpp"
     break;
@@ -1381,7 +1381,7 @@ yyreduce:
   case 11: /* decl_list: decl  */
 #line 92 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                {
-		(yyval.node) = context->CreateBlock((yyvsp[0].node));
+		(yyval.node) = context->CreateDeclBlock((yyvsp[0].node));
 	}
 #line 1387 "compiler_tab_autogen.cpp"
     break;
@@ -1390,7 +1390,7 @@ yyreduce:
 #line 95 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                          {
 		(yyval.node) = (yyvsp[-1].node);
-		(yyval.node)->children->push_back((yyvsp[0].node));
+		(yyval.node)->AddChild((yyvsp[0].node));
 	}
 #line 1396 "compiler_tab_autogen.cpp"
     break;
@@ -1398,7 +1398,7 @@ yyreduce:
   case 13: /* decl_list: %empty  */
 #line 99 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
           {
-		(yyval.node) = context->CreateBlock(nullptr);
+		(yyval.node) = context->CreateDeclBlock(nullptr);
 	}
 #line 1404 "compiler_tab_autogen.cpp"
     break;
@@ -1486,7 +1486,7 @@ yyreduce:
 		printf("ADD STMT\n");
 		(yyval.node) = (yyvsp[-1].node);
 		if ((yyvsp[0].node)) {
-			(yyval.node)->children->push_back((yyvsp[0].node));
+			(yyval.node)->AddChild((yyvsp[0].node));
 		}
 	}
 #line 1493 "compiler_tab_autogen.cpp"
@@ -1748,7 +1748,7 @@ yyreduce:
 #line 257 "/home/turtle/Desktop/demo_compiler/frontend/compiler.y"
                         {
 		(yyval.node) = (yyvsp[-2].node);
-		(yyval.node)->children->push_back((yyvsp[0].node));
+		(yyval.node)->AddChild((yyvsp[0].node));
 	}
 #line 1754 "compiler_tab_autogen.cpp"
     break;
